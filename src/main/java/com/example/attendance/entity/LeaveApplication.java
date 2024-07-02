@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "leave_application")
 public class LeaveApplication {
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//ID AIï¿½nï¿½[ï¿½oï¿½ï¿½	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//ID AI­n¥[³o¦æ	@Id
 	@Id
 	@Column(name = "serial_no")
 	private int serialNo;

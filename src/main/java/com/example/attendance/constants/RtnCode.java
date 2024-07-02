@@ -6,7 +6,7 @@ public enum RtnCode { //先建立package再建立enum(列舉),取名RtnCode,這邊放錯誤訊息
 	
 //	SUCCESSFUL為成功,()內的查HTTP狀態碼,主要用200,400,401,403,404, 200為成功,固定的,權限有相關的401&403,404固定就為找不到,剩下歸類到400
 	SUCCESSFUL(200,"SUCCESSFUL!!"),//  			在逗號後面加上註解符號有斷行的用意
-	PARAM_ERROR(400,"Param_error!!"),//  Param_error參數錯誤的意思 通常字串內容為前面訊息的小寫
+	PARAM_ERROR(400,"Param_error!!"),// 通常字串內容為前面訊息的小寫
 	ID_HAS_EXISTED(400,"ID HAS EXISTED!!"),//
 	DEPARTMENTS_NOT_FOUND(404,"DEPARTMENTS NOT FOUND!!"),//
 	ID_NOT_FOUND(404,"ID NOT FOUND!!"),//

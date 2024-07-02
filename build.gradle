@@ -36,6 +36,9 @@ dependencies {
 	//email
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	
+	// https://mvnrepository.com/artifact/javax.mail/mail
+	implementation 'com.sun.mail:javax.mail:1.6.2'
+	
 	//spring security ,使用 BCryptPasswordEncoder : 加密 密碼用
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	

@@ -10,7 +10,9 @@ import com.example.attendance.entity.Departments;
 @Repository
 public interface DepartmentsDao extends JpaRepository<Departments, String>{
 
+	/** 檢查list的id用in(包含範圍) **/
 	public boolean existsByIdIn(List<String> ids);
 	
-	public boolean existsByName(String name); //檢查name
+	/** 檢查name是否存在 **/
+	public boolean existsByName(String name); 
 }

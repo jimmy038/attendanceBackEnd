@@ -21,53 +21,55 @@ import com.example.attendance.vo.LoginReq;
 
 @RestController
 public class EmployeeController {
+	
+	//@RequestBody°Ñ¼Æ¥]¦¨ª«¥ó±a¤J @RequestParam±a°Ñ¼Æ§Y¥i
 
-	@Autowired  //Controllerï¿½PServiceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	@Autowired  //Controller»PService°µ¤¶±µ
 	private EmployeeService service;
 	
-	//ï¿½ï¿½PostMappingï¿½ï¿½login
-	@PostMapping(value = "api/attendance/login")
+	//¥ÎPostMappingªºlogin
+	@PostMapping(value = "api/attendance/post_login")
 	public BasicRes login(@RequestBody LoginReq req, HttpSession session) {
-		//ï¿½ï¿½ï¿½]ï¿½Ú¾ï¿½keyï¿½ï¿½(id)ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½valueï¿½È¡Aï¿½ï¿½ï¿½óµ¥©ï¿½nullï¿½Éªï¿½Ü¥ï¿½ï¿½ï¿½ï¿½\ï¿½nï¿½Jï¿½L
+		//°²³]®Ú¾Úkey­È(id)¨ú±o¹ïÀ³ªºvalue­È¡Aµ¥©óµ¥©ónull®Éªí¥Ü¥¼¦¨¥\µn¤J¹L
 		if(session.getAttribute(req.getId()) == null) {
 			return service.login(req.getId(),req.getPwd(), session);
 		}
-		//ï¿½pï¿½Gï¿½ï¿½ï¿½\ï¿½nï¿½Jï¿½^ï¿½ï¿½RtnCode.SUCCESSFUL
+		//¦pªG¦¨¥\µn¤J¦^¶ÇRtnCode.SUCCESSFUL
 		return new BasicRes(RtnCode.SUCCESSFUL);
 	}
 	
-	//ï¿½ï¿½GetMappingï¿½ï¿½login
-	@GetMapping(value = "api/attendance/login1")
+	//¥ÎGetMappingªºlogin
+	@GetMapping(value = "api/attendance/get_login1")
 	public BasicRes login1(
 			@RequestParam(value = "id")String id,//
 			@RequestParam(value = "password")String pwd,//
 			HttpSession session) {
-		//ï¿½ï¿½ï¿½]ï¿½Ú¾ï¿½keyï¿½ï¿½(id)ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½valueï¿½È¡Aï¿½pï¿½Gidï¿½ï¿½ï¿½óµ¥©ï¿½nullï¿½Éªï¿½Ü¥ï¿½ï¿½ï¿½ï¿½\ï¿½nï¿½Jï¿½L-->ï¿½nï¿½Dï¿½nï¿½Jï¿½bï¿½ï¿½
+		//°²³]®Ú¾Úkey­È(id)¨ú±o¹ïÀ³ªºvalue­È¡A¦pªGidµ¥©óµ¥©ónull®Éªí¥Ü¥¼¦¨¥\µn¤J¹L-->­n¨Dµn¤J±b¸¹
 		if(session.getAttribute(id) == null) {
 			return service.login(id, pwd, session);
 		}
-		//ï¿½pï¿½Gï¿½ï¿½ï¿½\ï¿½nï¿½Jï¿½^ï¿½ï¿½RtnCode.SUCCESSFUL
+		//¦pªG¦¨¥\µn¤J¦^¶ÇRtnCode.SUCCESSFUL
 		return new BasicRes(RtnCode.SUCCESSFUL);
 	}
 	
 	
-	//ï¿½nï¿½Xï¿½Aï¿½nï¿½Xï¿½Ý­nï¿½ï¿½ì¥»ï¿½È¦sï¿½ï¿½ï¿½ï¿½Æ²Mï¿½ï¿½()ï¿½ï¿½ï¿½nï¿½aï¿½JHttpSession sessionï¿½Asessionï¿½Ý©ï¿½ï¿½Æ§Ö¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Ö¨ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½|ï¿½È¦sï¿½bï¿½Oï¿½ï¿½ï¿½é¤º
+	//µn¥X¡Aµn¥X»Ý­n§â­ì¥»¼È¦sªº¸ê®Æ²M°£()¤º­n±a¤JHttpSession session¡AsessionÄÝ©ó¸ê®Æ§Ö¨úÃþªº¡A§Ö¨úÃþ¸ê®Æ³£·|¼È¦s¦b°O¾ÐÅé¤º
 	@GetMapping(value = "api/attendance/logout")
 	public BasicRes logout(HttpSession session) {
-		//ï¿½ï¿½ï¿½ï¿½ï¿½session(ï¿½È¦s)ï¿½ï¿½ï¿½ï¿½ session.invalidate
+		//Åý¾ã­Ósession(¼È¦s)¥¢®Ä session.invalidate
 		session.invalidate(); 
 		return new BasicRes(RtnCode.SUCCESSFUL);
 	}
 	
 	
-	//employee create ï¿½sï¿½Wï¿½ï¿½ï¿½uï¿½ï¿½Æªï¿½APIï¿½ï¿½kï¿½Aï¿½ï¿½ï¿½]ï¿½{ï¿½bï¿½nï¿½nï¿½Jï¿½ï¿½ï¿½\ï¿½ï¿½~ï¿½ï¿½Ï¥Î·sï¿½Wï¿½ï¿½ï¿½ï¿½kï¿½A
+	//employee create ·s¼W­û¤u¸ê®ÆªºAPI¤èªk¡A°²³]²{¦b­nµn¤J¦¨¥\«á¤~¯à¨Ï¥Î·s¼Wªº¤èªk¡A
 	@PostMapping(value = "api/attendance/employee/create")
 	public BasicRes create(@RequestBody EmployeeCreateReq req, HttpSession session) {
-		//ï¿½Ä¤@ï¿½Ó¨ï¿½ï¿½bï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½Ï¥ÎªÌ¥ï¿½APIï¿½iï¿½Jï¿½Aï¿½nï¿½ï¿½ï¿½nï¿½Jï¿½bï¿½Kï¿½~ï¿½ï¿½sï¿½Wï¿½ï¿½T    req.getCreatorId()ï¿½ï¿½ï¿½nï¿½Jï¿½ï¿½ï¿½Ï¥Îªï¿½ID
+		//²Ä¤@­Ó¨¾§b¨¾¥~³¡¨Ï¥ÎªÌ¥´API¶i¤J¡A­n¦³µn¤J±b±K¤~¯à·s¼W¸ê°T    req.getCreatorId()¬°µn¤Jªº¨Ï¥ÎªÌID
 		if(session.getAttribute(req.getCreatorId()) == null ) {
 			return new BasicRes(RtnCode.PLEASE_LOGIN_FIRST);
 		}
-		//ï¿½Ä¤Gï¿½Ó¨ï¿½ï¿½bï¿½ï¿½ï¿½Ï¥Îªï¿½ï¿½vï¿½ï¿½ï¿½iï¿½Jï¿½Aï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Adminï¿½~ï¿½ï¿½sï¿½Wï¿½ï¿½ï¿½uï¿½ï¿½ï¿½
+		//²Ä¤G­Ó¨¾§b¨¾¨Ï¥ÎªÌÅv­­¶i¤J¡AÅv­­¥²¶·¬°Admin¤~¯à·s¼W­û¤u¸ê®Æ
 		if(session.getAttribute(req.getCreatorId()).toString().equalsIgnoreCase("Admin")) {
 			return new BasicRes(RtnCode.UNAUTHORIZATED);
 		}
@@ -75,34 +77,34 @@ public class EmployeeController {
 	}
 	
 	
-	//ï¿½ï¿½ï¿½Kï¿½X
+	//§ó§ï±K½X
 	@PostMapping(value = "api/attendance/employee/change_password")
 	public BasicRes changePassword(@RequestBody ChangePasswordReq req, HttpSession session) {
-		//ï¿½nï¿½ï¿½ï¿½Kï¿½Xï¿½Ð¥ï¿½ï¿½nï¿½J
+		//­n§ó§ï±K½X½Ð¥ýµn¤J
 		if(session.getAttribute(req.getId()) == null ) {
 			return new BasicRes(RtnCode.PLEASE_LOGIN_FIRST);
 		}
 		return service.changePassword(req.getId(), req.getOldPwd(), req.getNewPwd());
 	}
 	
-	//ï¿½Ñ°Oï¿½Kï¿½X
+	//§Ñ°O±K½X
 	@PostMapping(value = "api/attendance/employee/forgot_password")
 	public BasicRes forgotPassword(@RequestBody ForgotPasswordReq req) {
 		return service.forgotPassword(req.getId(), req.getEmail());
 	}
 	
 	
-	//ï¿½ï¿½ï¿½Kï¿½X
+	//§ó§ï±K½X
 	@PostMapping(value = "api/attendance/employee/change_password_by_auth_code")
 	public BasicRes changePasswordByAuthCode(@RequestBody ChangePasswordReq req) {
 		return service.changePasswordByAuthCode(req.getId(), req.getAuthCode(), req.getNewPwd());
 	}
 	
 	
-	//ï¿½ï¿½ï¿½ï¿½uï¿½Û¤vï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½Aï¿½uï¿½ï¿½ï¿½oï¿½Û¤vï¿½ï¿½ï¿½ï¿½T
+	//§ä­û¤u¦Û¤vªº¸ê®ÆID¡A¥u¨ú±o¦Û¤vªº¸ê°T
 	@PostMapping(value = "api/attendance/employee/get_info")
 	public EmployeeRes findByEmployeeId(@RequestBody GetEmployeeInfoReq req, HttpSession session){
-		//ï¿½Pï¿½_ï¿½Oï¿½_ï¿½nï¿½Jï¿½ï¿½ï¿½\ï¿½L
+		//§PÂ_¬O§_µn¤J¦¨¥\¹L
 		if(session.getAttribute(req.getCollerId()) == null ) {
 			return new EmployeeRes(RtnCode.PLEASE_LOGIN_FIRST,null);
 		}

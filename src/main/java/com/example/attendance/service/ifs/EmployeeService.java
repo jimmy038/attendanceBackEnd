@@ -14,8 +14,8 @@ public interface EmployeeService {
 
 	//新增員工資料
 	public BasicRes create(EmployeeCreateReq req); 
-	
-	//登入 										 加入HttpSession session，做暫存資料用
+	 
+	//登入 				  員編        密碼			 加入HttpSession session，做暫存資料用
 	public BasicRes login(String id, String pwd, HttpSession session);
 	
 	//改密碼

@@ -2,6 +2,7 @@ package com.example.attendance.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+//µn¤J¥ÎReq
 public class LoginReq {
 
 	private String id;  

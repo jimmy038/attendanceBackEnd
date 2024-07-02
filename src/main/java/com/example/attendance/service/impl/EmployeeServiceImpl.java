@@ -1,6 +1,5 @@
 package com.example.attendance.service.impl;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -31,6 +30,7 @@ import net.bytebuddy.utility.RandomString;
 
 import com.example.attendance.vo.BasicRes;
 
+//員工
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 	
@@ -68,18 +68,19 @@ public class EmployeeServiceImpl implements EmployeeService{
 				|| req.getArrivalDate() == null) {
 				return new BasicRes(RtnCode.PARAM_ERROR);
 		}
-		//檢查ID 假設ID存在
+		//檢查ID 假設ID存在 回ID已存在 id不能重複 id為員編
 		if(dao.existsById(req.getId())) {
 			return new BasicRes(RtnCode.ID_HAS_EXISTED);
 		}
-		//check 檢查 departments_name -> 要確認帶入部門名稱是否存在
+		//check 檢查 departments_name(部門名稱) -> 要確認帶入部門名稱是否存在
 		if(departmentsDao.existsByName(req.getDepartment())) {
 			return new BasicRes(RtnCode.DEPARTMENTS_NOT_FOUND);
 		} 
-		//密碼加密改為亂碼 加密後存入
+		//密碼加密 設定回req裡面 加密後存入  
 		req.setPwd(encoder.encode(req.getPwd()));
 		//覺得可能出錯的地方↓會用到Logger
 		try {
+			//轉型存入
 			dao.save((Employee)req); 
 		} catch (Exception e) {
 			//記錄一般資訊用logger.info 錯誤用logger.error
@@ -98,13 +99,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 		}
 		//檢查ID 跟 PWD
 		Optional<Employee> op = dao.findById(id);
-		//假設op為空 為空時回傳RtnCode.ID_NOT_FOUND
 		if(op.isEmpty()) {
 			return new BasicRes(RtnCode.ID_NOT_FOUND);
 		}
-		//如果有時ID 取出ID
+		//如果有ID 取出ID
 		Employee employee = op.get();
 		//假設比對沒有matches的話 matches(輸入的原密碼，比對加密後的密碼(資料庫內的密碼))
+		//這裡pwd為登入帶的密碼 比對加密後DB密碼
 		if(!encoder.matches(pwd, employee.getPwd())) {
 			return new BasicRes(RtnCode.PASSWORD_ERROR);
 		}
@@ -115,7 +116,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		//存入帳密在HttpSession session(暫存)
 		session.setAttribute(id, employee.getDepartment());//("A01",部門IT)
 		//設定時間暫存登入時間，預設為30分鐘1800秒，預設單位為秒
-		session.setMaxInactiveInterval(3000); //設定3000秒10分鐘
+		session.setMaxInactiveInterval(1800); 
 		//記錄一般資訊用logger.info 錯誤用logger.error
 		logger.info("login successful");
 		return new BasicRes(RtnCode.SUCCESSFUL);
@@ -127,7 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		if(!StringUtils.hasText(id) || !StringUtils.hasText(oldPwd) || !StringUtils.hasText(newPwd)) {
 			return new BasicRes(RtnCode.PARAM_ERROR);
 		}
-		//判斷新的密碼不能與舊密碼相同，equals兩個值比對，舊密碼比對新密碼
+		//判斷新的密碼不能與舊密碼相同，舊密碼比對新密碼
 		if(oldPwd.equals(newPwd)){
 			//如果舊密碼與新的密碼相同拋錯誤訊息回去
 			return new BasicRes(RtnCode.OLD_PASSWORD_AND_NEW_PASSWORD_ARE_IDENITCAL);

@@ -33,22 +33,25 @@ public class Employee {
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
 	
+	//到職日
 	@Column(name = "arrival_date")
 	private LocalDate arrivalDate;
 	
+	//離職日
 	@Column(name = "resignation_date")
 	private LocalDate resignationDate;
 	
+	//離職原因
 	@Column(name = "quit_reson")
 	private String quitReson;
 	
-	@Column(name = "active")  //嚙踝蕭嚙瘤嚙磊嚙踝蕭嚙緻嚙確嚙諉剩下嚙踝蕭嚙緯嚙誼查嚙諸潘蕭
+	@Column(name = "active")  //除了下面這三個剩下都要檢查參數
 	private Boolean active;
 	
-	@Column(name = "annual_leave") //嚙羯嚙踝蕭
+	@Column(name = "annual_leave") //年假
 	private int annualLeave;
 	
-	@Column(name = "sick_leave")   //嚙篆嚙踝蕭
+	@Column(name = "sick_leave")   //病假預設30天
 	private int sickLeave = 30;
 
 	public Employee() {
